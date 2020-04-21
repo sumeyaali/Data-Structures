@@ -2,6 +2,7 @@ import sys
 sys.path.append('../queue_and_stack')
 from dll_queue import Queue
 from dll_stack import Stack
+from doubly_linked_list import ListNode
 
 
 class BinarySearchTree:
@@ -9,24 +10,71 @@ class BinarySearchTree:
         self.value = value
         self.left = None
         self.right = None
+        #self.queue = dll_queue()
+        #self.stack = dll_stack()
+
 
     # Insert the given value into the tree
     def insert(self, value):
-        pass
+        new_node = BinarySearchTree(value)
+        
+        #adds the input value to the binary search tree, adhering to the rules of the ordering of elements in a binary search tree.
+        # First check if root is empty, if value is < root, move value left and vice versa
+        if value < self.value and self.left is None:
+            self.left = new_node
+
+        elif value < self.value and self.left is not None:
+            self.left.insert(value)
+
+        # Go down to the next node or "root", evaluate if value is < or > and move it to its appropriate side
+        elif value >= self.value and self.right is None:
+            self.right = new_node
+            #self.right.insert(new_value)
+        elif value >= self.value and self.right is not None:
+            self.right.insert(value)   
+       
+
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
+        # 1. How do we check if a value is in a tree?
+        if self.value is None:
+            return False
+        elif target == self.value:
+            return True
+        elif target < self.value:
+            if self.left is not None:
+                return self.left.contains(target)
+            else:
+                return False
+        elif target > self.value:
+            if self.right is not None:
+                return self.right.contains(target)
+            else:
+                return False
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        if self.right is not None:
+            return self.right.get_max()
+        else:
+            return self.value
 
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
-        pass
+        # performs a traversal of _every_ node in the tree, executing the passed-in callback function on each tree node value.
+        # Cal cb function to self.value
+        cb(self.value)
+        # Call for each on on the right side so it can call cb on each value
+        if self.right:
+            self.right.for_each(cb)
+        # call for each on the left side so it can call cb on each value
+        if self.left:
+            self.left.for_each(cb)
+
+
 
     # DAY 2 Project -----------------------
 
