@@ -10,8 +10,8 @@ class BinarySearchTree:
         self.value = value
         self.left = None
         self.right = None
-        #self.queue = dll_queue()
-        #self.stack = dll_stack()
+        # self.queue = dll_queue()
+        # self.stack = dll_stack()
 
 
     # Insert the given value into the tree
@@ -81,17 +81,57 @@ class BinarySearchTree:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
-        pass
+        if node is None:
+            return   
+
+        if node.left is not None:
+            node.in_order_print(node.left)   
+        print(node.value)
+        if node.right is not None:
+            node.in_order_print(node.right)
+        
+            
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        # Iterative BFT
+        # Create queue
+        queue = Queue()
+        # # Add root to queue
+        queue.enqueue(node)
+        while queue.size != 0:
+        # Pop node off queue
+            deleted_node = queue.dequeue() 
+            print(deleted_node.value)
+
+            if deleted_node.left is not None:
+                queue.enqueue(deleted_node.left)
+            if deleted_node.right is not None:
+                queue.enqueue(deleted_node.right)
+       
+        # Add children of node to queue
+    
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        # Iterative DFT
+        # Create Stack
+        stack = Stack()
+        # Add root to Stack
+        stack.push(node)
+        # while Stack is not empty, set node = pop top off Stack
+        while stack.size != 0:
+        # Pop node off Stack
+            deleted_node = stack.pop()
+        # Print
+            print(deleted_node.value)
+        # Add children of node to Stack
+            if deleted_node.right is not None:
+                stack.push(deleted_node.right)
+            if deleted_node.left is not None:
+                stack.push(deleted_node.left)
 
     # STRETCH Goals -------------------------
     # Note: Research may be required
